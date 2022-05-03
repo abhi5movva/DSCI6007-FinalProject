@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction of Heart Diseases</title>
+ </head>
+<body>
+        <h2>Welcome to Heart Prediction App</h2>
+        <h3>Enter Medical info</h3>
+        <form action = "{{ url_for('heartPrediction') }}" method="POST">
+            <table border="1" style="border-color:gray; border-collapse:collapse;" cellpadding="5" cellspacing="5">
+                <tr>
+                    <td><h4>Age</h4> 
+                    <input type="number" name="age" min="29" max="77" > </td> 
+                    
+                    <td><h4>Sex</h4> 
+                    <input type="number" name="sex" min="0" max="1" > </td> 
+
+                    <td><h4>chestpain</h4> 
+                    <input type="number" name="cp" min="0" max="3" > </td> 
+
+                    <td><h4>restingbloodpressure</h4> 
+                    <input type="number" name="trestbps" min="94" max="200" > </td> 
+
+                    <td><h4>cholestoral</h4> 
+                    <input type="number" name="chol" min="126" max="564" > </td> 
+
+                    <td><h4>fastingbloddsugar</h4> 
+                    <input type="number" name="fbs" min="0" max="1" > </td> 
+
+                    <td><h4>restecg</h4> 
+                    <input type="number" name="restecg" min="0" max="2" > </td> 
+
+                    <td><h4>maximumheartrate</h4> 
+                    <input type="number" name="thalach" min="71" max="202" > </td> 
+
+                    <td><h4>exang</h4> 
+                    <input type="number" name="exang" min="0" max="1" > </td> 
+
+                    <td><h4>oldpeak</h4> 
+                    <input type="number" name="oldpeak" min="0" max="6.2" > </td> 
+
+                    <td><h4>slope</h4> 
+                    <input type="number" name="slope" min="0" max="2" > </td> 
+                    
+                    <td><h4>majorvessels</h4> 
+                    <input type="number" name="ca" min="0" max="4" > </td> 
+
+                    <td><h4>thal</h4> 
+                    <input type="number" name="thal" min="0" max="3" > </td> 
+
+                    <!--
+                
+                    <td><h4>Job</h4>
+                        <select name = "job">
+                            <option value="admin.">Administration</option>
+                            <option value="blue-collar">Blue-collar</option>
+                            <option value="entrepreneur">Entrpreneur</option>
+                            <option value="housemaid">Housemaid</option>
+                            <option value="management">Management</option>
+                            <option value="retired">Retired</option>
+                            <option value="self-employed">Self-employed</option>
+                            <option value="services">Services</option>
+                            <option value="student">Student</option>
+                            <option value="technician">Technician</option>
+                            <option value="unemployed">Unemployed</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </td>
+                    <td><h4>Marital</h4>
+                        <select name = "marital">
+                            <option value="married">Married</option>
+                            <option value="single">Single</option>
+                            <option value="divorced">Divorced / Widowed</option>                          
+                        </select>
+                    </td>
+                    <td><h4>Education</h4>
+                        <select name = "education"> 
+                            <option value="primary">Primary</option>
+                            <option value="secondary">Secondary</option>
+                            <option value="tertiary">Tertiary</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><h4>Default</h4>
+                        <select name = "default">
+                            <option value="yes">Yes</option> 
+                            <option value="no">No</option>
+                        </select>
+                    </td>
+                    <td><h4>Balance</h4>
+                        <input type="number" name="balance" min="0" max="1000000"> </td>              
+                    <td><h4>Housing</h4>
+                        <select name = "housing">
+                            <option value="yes">Yes</option> 
+                            <option value="no">No</option>
+                        </select>
+                    </td>
+                    <td><h4>Loan</h4>
+                        <select name = "loan">
+                            <option value="yes">Yes</option> 
+                            <option value="no">No</option>
+                        </select>
+                    </td>  
+                -->          
+                </tr>
+            </table>
+            <!-- <input type="hidden" id="forminput" name="forminput"  >    -->        
+            <p><input type="submit" value="The predicted Heart Disease is "></p>
+             {% if (results) %} 
+             <h3> Heart Disease Prediction: {{ results }}  </h3>
+             <p> for following features: </p>
+              <p> Age: {{age}} Sex: {{sex}} restingbloodpressure: {{trestbp}} cholesterol: {{chol}} </p>
+             <p> fastingbloodsugar: {{fbs}} restecg: {{restecg}} maximumheartrate: {{thalach}} exang: {{exang}}</p>
+             <p> oldpeak: {{oldpeak}} slope: {{slope}} majorvessels: {{ca}} thal: {{thal}}</p>
+             {% endif %}
+        </form>
+</body>
+</html>

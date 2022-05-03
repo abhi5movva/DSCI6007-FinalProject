@@ -1,0 +1,97 @@
+from flask import Flask, render_template, request, json, jsonify
+from sklearn import preprocessing
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+import requests
+import numpy as np
+import pandas as pd
+import sklearn
+import pickle
+
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import OneHotEncoder
+
+
+def load_model():
+    global model
+    with open('hmodel.pkl', 'rb') as f:
+        model = pickle.load(f)
+
+app = Flask(__name__)
+
+#decorator to access the app
+@app.route("/")
+@app.route("/index")
+def index():
+    return render_template("home.html")
+
+#decorator to access the service
+@app.route("/heartPrediction", methods=['GET', 'POST'])
+def heartPrediction():
+
+    if request.method == 'GET':
+        return (flask.render_template('home.html'))
+    
+    if request.method == 'POST':
+        #extract from inputs
+        age = request.form.get("age")
+        sex = request.form.get("sex")
+        cp = request.form.get("cp")
+        trestbps = request.form.get("trestbps")
+        chol = request.form.get("chol")
+        fbs = request.form.get("fbs")
+        restecg = request.form.get("restecg")
+        thalach = request.form.get("thalach")
+        exang = request.form.get("exang")
+        oldpeak = request.form.get("oldpeak")
+        slope = request.form.get("slope")
+        ca = request.form.get("ca")
+        thal = request.form.get("thal")
+
+        input_data = pd.DataFrame([[age, sex, cp, trestbps,chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal]],
+        columns=['age', 'sex', 'cp', 'trestbps','chol', 'fbs', 'restecg', 'thalach', 'exang', 'oldpeak', 'slope', 'ca', 'thal'], dtype = float)
+
+        #dataset = pd.read_csv("heart.csv")
+       
+
+        #x_train, x_test, y_train, y_test = train_test_split(dataset.drop(columns=['target']), dataset['target'], test_size=0.3)
+        #sc = StandardScaler()
+        #x_train_s = sc.fit_transform(x_train)
+        #x_test_s = sc.fit_transform(x_test)
+        #model = LogisticRegression(max_iter=100)
+        #model.fit(x_train, y_train) 
+
+   #convert data to json
+    #data = json.dumps({"age": age, "sex": sex, "cp": cp, "trestbps": trestbps, "fbs": fbs, "restecg": restecg, "thalach": thalach, "exang": exang, "oldpeak": oldpeak, "slope": slope, "ca": ca, "thal": thal})
+    #input_d = np.array([age, primary_use, square_feet, year_built, air_temperature, cloud_coverage,
+    #dew_temperature, hour, day, weekend, month])
+    #url for bank marketing model
+    #url = "http://localhost:5000/api"
+    #url = "http://0.0.0.0:8080/mlapi"
+
+       #get data from request
+    #data = request.get_json(force=True)
+    #data_categoric = np.array([data["meter"], data["primary_use"], data["square_feet"], data["year_built"], data["air_temperature"], data["cloud_coverage"], data["dew_temperature"], data["hour"], data["day"], data["weekend"], data["month"]])
+    #data_categoric = np.reshape(data_categoric, (1, -1))
+        
+        data_final = np.array(StandardScaler().fit_transform(input_data))
+       
+
+            
+    
+
+    #make predicon using model
+    #prediction = model.predict(data_final)
+        prediction = model.predict(input_data)[0]
+  
+    #post data to url
+        results =  prediction
+
+    #send input values and prediction result to index.html for display
+        return render_template("home.html",age = age, sex = sex, cp = cp, trestbps = trestbps,chol=chol, fbs = fbs, restecg = restecg, thalach = thalach, exang = exang, oldpeak = oldpeak, slope = slope, ca = ca, thal = thal , results=prediction)
+  
+if __name__=="__main__":
+    load_model()
+    app.run(host='0.0.0.0', port=80)
